@@ -1,0 +1,26 @@
+pipeline {
+  agent any
+  
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'master', url: 'https://github.com/your-repo.git'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'mvn clean package' // or 'dotnet build' for .NET projects
+      }
+    }
+    stage('Unit Test') {
+      steps {
+        sh 'mvn test' // or 'dotnet test' for .NET projects
+      }
+    }
+    stage('Code Analysis') {
+      steps {
+        sh 'mvn sonar:sonar' // or 'dotnet sonarscanner' for .NET projects
+      }
+    }
+  }
+}
